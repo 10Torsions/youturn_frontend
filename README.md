@@ -5,7 +5,7 @@
 Clone this repo
 
 ```shell
-git clone git@github.com:JoAnisky/rotation-app-frontend.git
+git clone git@github.com:10Torsions/youturn_frontend.git
 ```
 
 Navigate into the project's folder and install dependencies
