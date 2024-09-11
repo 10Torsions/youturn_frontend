@@ -230,8 +230,8 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
             {status === "NOT_STARTED" && "Activité non démarrée"}
             {status === "ROTATING" && userRole !== "ROLE_ANIMATOR" && (
               <>
-                <p>On change de stand !</p>
-                <p>Aller à </p>
+                <span>On change de stand !</span><br/>
+                <span>Aller à </span>
                 {nextStandNames.map((item, index) => (
                   <Box key={index} bgcolor="secondary.main" color="primary.contrastText" borderRadius={1}>
                     {item.nextStandName || "Non spécifié"}
@@ -241,7 +241,7 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
             )}
             {status === "ROTATING" && userRole === "ROLE_ANIMATOR" && (
               <>
-                <p>Vous allez accueillir</p>
+                <span>Vous allez accueillir</span>
               </>
             )}
             {status === "COMPLETED" && "Activité terminée !"}
@@ -251,7 +251,7 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
               userRole == "ROLE_PARTICIPANT" &&
               ((
                 <>
-                  <p>Stand</p>
+                  <span>Stand</span>
                   <Box bgcolor="primary.main" color="primary.contrastText" p={1} borderRadius={1}>
                     {standName}
                   </Box>
@@ -266,7 +266,9 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
                   <Box bgcolor="secondary.main" color="primary.contrastText" p={1} borderRadius={1}>
                     {nextTeams[0].teamName}
                   </Box>
-                  <Box mx={1}>VS</Box>
+                  <Box mx={1}>
+                    <span>VS</span>
+                  </Box>
                   <Box bgcolor="secondary.main" color="primary.contrastText" p={1} borderRadius={1}>
                     {nextTeams[1].teamName}
                   </Box>
@@ -283,7 +285,9 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
                 <Box bgcolor="primary.main" color="primary.contrastText" p={1} borderRadius={1}>
                   {currentTeams[0].teamName}
                 </Box>
-                <Box mx={1}>VS</Box>
+                <Box mx={1}>
+                  <span>VS</span>
+                </Box>
                 <Box bgcolor="primary.main" color="primary.contrastText" p={1} borderRadius={1}>
                   {currentTeams[1].teamName}
                 </Box>
@@ -302,12 +306,12 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
       </Box>
 
       {/**Bottom part */}
-      <Grid container spacing={1} direction="column" sx={{ width: "100%", gap: "10px", mt: "auto", mb:2 }}>
+      <Grid container spacing={1} direction="column" sx={{ width: "100%", gap: "10px", mt: "auto", mb: 2 }}>
         {status !== "COMPLETED" && (
           <Box sx={{ textAlign: "center" }}>
             {lastTurn ? (
               <Box bgcolor="success.main" color="primary.contrastText" p={1} borderRadius={1}>
-                Dernier tour !
+                <span>Dernier tour !</span>
               </Box>
             ) : (
               <>
@@ -328,7 +332,7 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
                   ))
                 ) : (
                   <Box bgcolor="text.secondary" color="primary.contrastText" p={1} borderRadius={1}>
-                    Non spécifié
+                    <span>Non spécifié</span>
                   </Box>
                 )}
               </>
@@ -339,7 +343,7 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
         {userRole === "ROLE_ANIMATOR" && !lastTurn && status !== "COMPLETED" && (
           <Box sx={{ textAlign: "center" }}>
             <Typography variant="button" component="span">
-              Équipe(s) suivante :
+              <span>Équipe(s) suivante :</span>
             </Typography>
             {nextTeams.length > 0 ? (
               nextTeams.map((team, index) => (
@@ -349,7 +353,7 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
               ))
             ) : (
               <Box bgcolor="text.secondary" color="primary.contrastText" p={1} borderRadius={1}>
-                Non spécifié
+                <span>Non spécifié</span>
               </Box>
             )}
           </Box>
