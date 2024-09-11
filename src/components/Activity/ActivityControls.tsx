@@ -76,7 +76,6 @@ const ActivityControls: React.FC<ActivityControlsProps> = ({ activityId }) => {
         setStandEnabled(true);
         break;
       default:
-        console.log("Unhandled status: ", activityStatus);
     }
   }, [activityStatus]);
 
@@ -87,11 +86,10 @@ const ActivityControls: React.FC<ActivityControlsProps> = ({ activityId }) => {
         return;
       }
       const bodyData: { current_scenario?: ICurrentScenario[]; status?: ActivityStatus } = {};
-console.log("currentScenario premier lancement : ", currentScenario);
+
       if (currentScenario) {
         bodyData.current_scenario = currentScenario;
         if (currentScenario.length === 1) {
-          console.log("Dernier tour ! : ", currentScenario);
           setLastTurn(true);
         }
       }
@@ -108,7 +106,6 @@ console.log("currentScenario premier lancement : ", currentScenario);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        console.log("Scenario updated successfully");
         if (activityStatus) setActivityStatus(activityStatus);
       } catch (error) {
         console.error("Failed to update scenario: ", error);
