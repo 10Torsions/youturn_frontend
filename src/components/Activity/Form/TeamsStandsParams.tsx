@@ -201,7 +201,6 @@ const TeamsStandsParams: React.FC<ITeamStandsParamsProps> = ({
   const generateTeamNames = (numberOfTeams: number, theme: string): void => {
     // Immediate return if the theme or number of teams is not initialized properly
     if (!theme || numberOfTeams === null) {
-      console.log("Initialization check - Skipping execution");
       return;
     }
 
@@ -329,7 +328,6 @@ const TeamsStandsParams: React.FC<ITeamStandsParamsProps> = ({
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error("Failed to submit data");
-      console.log("Data submitted successfully for", dataField);
       // Additional UI update logic can go here
     } catch (error) {
       console.error("Error submitting data:", error);
