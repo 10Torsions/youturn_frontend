@@ -8,9 +8,7 @@ export interface IScenarioStand {
 }
 
 // Définir une interface pour représenter une activité de scénario
-export interface ICurrentScenario {
-  [key: string]: IScenarioStand;
-}
+export interface ICurrentScenario extends Array<IScenarioStand> {}
 
 export interface IScenario {
   id: number;
