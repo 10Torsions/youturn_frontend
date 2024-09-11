@@ -11,6 +11,7 @@ const GeneralView: React.FC = () => {
 
   useEffect(() => {
     refreshScenario();
+    // eslint-disable-next-line
   }, []);
 
   // Récupérer les données du scénario
