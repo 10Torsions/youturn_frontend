@@ -196,11 +196,9 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
 
   return (
     <Container
-      maxWidth="sm"
       sx={{
         mt: 2,
-        width: "85%",
-        p: 2,
+        width: "100%",
         height: "86svh",
         display: "flex",
         flexDirection: "column",
@@ -208,19 +206,18 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
       }}
     >
       <Status status={status} />
-
       {/** Up display for Team name or Stand name */}
       <Box sx={{ fontWeight: "bold", color: "primary.main", textAlign: "center" }} p={1} borderRadius={1}>
         {userRole === "ROLE_ANIMATOR" ? (
           <Box border={1} borderColor="primary.main" borderRadius={1} p={1}>
-            <Typography variant="h6" component="h6">
+            <Typography variant="h6" component="h5">
               {" "}
               Stand {standName}
             </Typography>
           </Box>
         ) : (
           <Box border={1} borderColor="primary.main" borderRadius={1} p={1}>
-            <Typography variant="h6" component="h6">
+            <Typography variant="h6" component="h5">
               Équipe {currentTeams.length > 0 ? currentTeams[0].teamName : "Nom d'équipe non disponible"}
             </Typography>
           </Box>
@@ -229,7 +226,7 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
 
       <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "100%" }}>
         <Box className="timer-container" sx={{ alignSelf: "center", textAlign: "center" }}>
-          <Typography variant="h6" component="h6">
+          <Typography variant="h6" component="h5">
             {status === "NOT_STARTED" && "Activité non démarrée"}
             {status === "ROTATING" && userRole !== "ROLE_ANIMATOR" && (
               <>
@@ -254,7 +251,7 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
               userRole == "ROLE_PARTICIPANT" &&
               ((
                 <>
-                  <Typography variant="h5">Stand</Typography>
+                  <p>Stand</p>
                   <Box bgcolor="primary.main" color="primary.contrastText" p={1} borderRadius={1}>
                     {standName}
                   </Box>
@@ -305,7 +302,7 @@ const Stand: React.FC<StandProps> = ({ animatorInfo, teamInfo }) => {
       </Box>
 
       {/**Bottom part */}
-      <Grid container spacing={1} direction="column" sx={{ width: "100%", gap: "10px", mt: "auto" }}>
+      <Grid container spacing={1} direction="column" sx={{ width: "100%", gap: "10px", mt: "auto", mb:2 }}>
         {status !== "COMPLETED" && (
           <Box sx={{ textAlign: "center" }}>
             {lastTurn ? (
