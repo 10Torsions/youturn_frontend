@@ -10,13 +10,20 @@ interface ScenarioProviderProps {
 }
 
 export const ScenarioProvider: React.FC<ScenarioProviderProps> = ({ chosenActivityId, children }) => {
-  const [scenario, setScenario] = useState<ICurrentScenario[] | null>(null);
+  const [baseScenario, setBaseScenario] = useState<ICurrentScenario[] | null>(null);
+  const [currentScenario, setCurrentScenario] = useState<ICurrentScenario[] | null>(null);
   const [data, loading, error, fetchData] = useFetch<IScenario[]>(SCENARIO_API.getScenarioByActivityId(chosenActivityId));
 
   useEffect(() => {
-    if (data && data.length > 0 && data[0].base_scenario) {
-      setScenario(data[0].base_scenario);
-		console.log(data);
+    if (data) {
+      if (data.length > 0) {
+        const scenarioData = data[0];
+        setBaseScenario(scenarioData.base_scenario || null);
+        setCurrentScenario(scenarioData.current_scenario || null);
+      } else {
+        setBaseScenario(null);
+        setCurrentScenario(null);
+      }
     }
   }, [data]);
 
@@ -24,7 +31,7 @@ export const ScenarioProvider: React.FC<ScenarioProviderProps> = ({ chosenActivi
     fetchData();  // Appelle la fonction de récupération de données fournie par useFetch
   };
 
-  return <ScenarioContext.Provider value={{ scenario, loading, error, refreshScenario }}>{children}</ScenarioContext.Provider>;
+  return <ScenarioContext.Provider value={{ baseScenario, currentScenario, loading, error, refreshScenario }}>{children}</ScenarioContext.Provider>;
 };
 
 export default ScenarioProvider;
