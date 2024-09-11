@@ -1,63 +1,59 @@
-import { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import ActivitySelection from "@/components/Activity/ActivitySelection";
 import CustomSnackbar from "@/components/CustomSnackbar";
 import { CustomSnackbarMethods } from "@/types/SnackbarTypes";
 import { ACTIVITY_API } from "@/routes/api/";
+import { ActivityContext } from "@/contexts/ActivityContext"; // Assurez-vous que ce chemin est correct
 import { useAuth } from "@/hooks"
 
-interface ActivityChoiceProps {
-  setChosenActivityId: (activityId: number | string) => void;
-}
 
 interface IActivities {
   id: number;
   name: string;
 }
 
-const ActivityChoice: React.FC<ActivityChoiceProps> = ({ setChosenActivityId }) => {
-  const auth = useAuth();
+const ActivityChoice: React.FC = () => {
+  const { userId, csrfToken } = useAuth();
 
-  const { userId, csrfToken } = auth;
   const snackbarRef = useRef<CustomSnackbarMethods>(null);
   // Get selected activity
   const [selectedActivity, setSelectedActivity] = useState<IActivities | null>(null);
   const [newActivityName, setNewActivityName] = useState<string>("");
 
+  // Accès au contexte
+  const context = useContext(ActivityContext);
+
+  if (!context) {
+    throw new Error("ActivityContext must be used within an ActivityProvider");
+  }
+
+  const { setActivityData } = context;
+
   const handleActivityNameChange = (name: string) => {
     setNewActivityName(name);
   };
 
-  const handleCreateActivity = () => {
-    if (!newActivityName || newActivityName == "") {
+  const handleCreateActivity = async () => {
+    if (!newActivityName || newActivityName === "") {
       snackbarRef.current?.showSnackbar("Il faudrait choisir un nom d'activité", "warning");
       return;
     }
-    createActivity(newActivityName);
-  };
-
-  const createActivity = async (activityName: string) => {
-    // User ID comes from the Gamemaster
-    
-    const options: RequestInit = {
-      method: "POST",
-      headers: {
-        "x-xsrf-token": csrfToken as string,
-        "Content-Type": "application/json", 
-      },
-      credentials: "include", // Important: include credentials (cookies)
-      body: JSON.stringify({ name: activityName, user: userId })
-    };
-
     try {
-      const response = await fetch(`${ACTIVITY_API.activities}/`, options);
-      const responseData = await response.json();
+      const response = await fetch(`${ACTIVITY_API.activities}/`, {
+        method: "POST",
+        headers: {
+          "x-xsrf-token": csrfToken as string,
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ name: newActivityName, user: userId }),
+      });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      // Activity is created
-      setChosenActivityId(responseData.activity_id);
+      const responseData = await response.json();
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+      setActivityData(responseData.activity_id);
     } catch (error) {
       snackbarRef.current?.showSnackbar(`Echec lors de la création de l'activité : ${error}`, "error");
       console.error(`Failed to create activity: `, error);
@@ -73,7 +69,8 @@ const ActivityChoice: React.FC<ActivityChoiceProps> = ({ setChosenActivityId }) 
       snackbarRef.current?.showSnackbar("Il faudrait choisir une activité !", "warning");
       return;
     }
-    setChosenActivityId(selectedActivity.id); // Only set on button click
+    setActivityData(selectedActivity.id); // Mise à jour du contexte
+
   };
 
   return (

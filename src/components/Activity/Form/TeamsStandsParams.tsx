@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Autocomplete, Box, Button, Checkbox, Grid, IconButton, TextField, Typography } from "@mui/material";
+import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useFetch, useAuth } from "@/hooks";
+import { useScenario } from "@/contexts/ScenarioContext";
 import themedTeamsNames from "@/utils/themedTeamsNames";
 import CustomSnackbar from "@/components/CustomSnackbar";
 import { ACTIVITY_API, SCENARIO_API, STANDS_API } from "@/routes/api/";
 import { CustomSnackbarMethods, Severity } from "@/types/SnackbarTypes";
 import { IStand, ITeam } from "@/types/ActivityInterface";
-import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 
 interface ITeamStandsParamsProps {
   activityId: number | string;
@@ -60,6 +61,7 @@ const TeamsStandsParams: React.FC<ITeamStandsParamsProps> = ({
 
   const auth = useAuth();
   const { csrfToken } = auth;
+  const { refreshScenario } = useScenario();
 
   // Sets Stands for user selection
   useEffect(() => {
@@ -393,6 +395,8 @@ const TeamsStandsParams: React.FC<ITeamStandsParamsProps> = ({
         severity = "warning"; // Use 'warning' or 'error' based on your business logic
         message = data.message || "Il y'a un problème coté serveur.";
       } else {
+        // OK LETS GO
+        refreshScenario();
         message = data.message || message; // Use the server-provided message or default message
         details = data.details;
       }

@@ -5,6 +5,7 @@ import Router from "./routes/router";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import ActivityProvider from "./providers/ActivityProvider";
 import AuthProvider from "./providers/AuthProvider";
+import ScenarioWrapper from "./wrappers/ScenarioWrapper";
 
 const App: React.FC = () => {
   // On app launch, store the application's start time in localStorage.
@@ -21,7 +22,9 @@ const App: React.FC = () => {
     <BrowserRouter>
       <ActivityProvider>
         <AuthProvider>
-          <Router />
+          <ScenarioWrapper>
+            <Router />
+          </ScenarioWrapper>
         </AuthProvider>
       </ActivityProvider>
     </BrowserRouter>

@@ -1,28 +1,9 @@
-import { useEffect, useState } from "react";
 import { Box, CssBaseline, Typography, Card, CardContent, CardHeader, List, ListItem } from "@mui/material";
-import useFetch from "@/hooks/useFetch";
-import { SCENARIO_API } from "@/routes/api/";
-import { IScenario, ICurrentScenario} from "@/types/ScenarioInterface";
+import { useScenario } from "@/contexts/ScenarioContext";
 import { ITeam } from "@/types/ActivityInterface";
 
-// Définir une interface pour représenter un tour
-type ApiData = IScenario[];
-
-interface ScenarioProps {
-  chosenActivityId: number | string;
-}
-
-
-const Scenario: React.FC<ScenarioProps> = ({ chosenActivityId }) => {
-  const [scenario, setScenario] = useState<ICurrentScenario[] | null>(null);
-
-  const [data, loading, error] = useFetch<ApiData>(SCENARIO_API.getScenarioByActivityId(chosenActivityId));
-
-  useEffect(() => {
-    if (data && data.length > 0 && data[0].base_scenario) {
-      setScenario(data[0].base_scenario);
-    }
-  }, [data]);
+const Scenario: React.FC = () => {
+  const { scenario, loading, error } = useScenario();
 
   return (
     <Box sx={{ flexGrow: 1, overflowY: "auto", padding: 3 }}>
@@ -44,15 +25,15 @@ const Scenario: React.FC<ScenarioProps> = ({ chosenActivityId }) => {
             Loading...
           </Typography>
         )}
-        {error && (
+        {error && !scenario && (
           <Box>
             <Typography component="h1" variant="h5" align="center" sx={{ mb: 2 }}>
               Oups :(
             </Typography>
-            {error.message}
+            <Typography align="center">{error.message}</Typography>
           </Box>
         )}
-        {!loading && !error && (
+        {!loading && (
           <>
             <Typography>Affichage du scenario :</Typography>
             {scenario && scenario.length > 0 ? (
