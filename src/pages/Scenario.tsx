@@ -1,5 +1,5 @@
 import { Box, CssBaseline, Typography, Card, CardContent, CardHeader, List, ListItem } from "@mui/material";
-import { useScenario } from "@/contexts/ScenarioContext";
+import { useScenario } from "@/hooks";
 import { ITeam } from "@/types/ActivityInterface";
 
 const Scenario: React.FC = () => {
