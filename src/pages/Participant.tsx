@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Autocomplete, Button, Container, Grid, TextField, Typography } from "@mui/material";
+import { Autocomplete, Button, Container, Grid, TextField, Typography, Box } from "@mui/material";
 import useActiveComponent from "@/hooks/useActiveComponent";
 import { Stand, GeneralView } from "@/pages";
 import { NavbarDown, NavbarUp, CustomSnackbar } from "@/components";
@@ -67,7 +67,16 @@ const Participant: React.FC = () => {
     }
   });
   return (
-    <Container sx={{ display: "flex", flexDirection: "column", height: "100vh", padding: "0" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        width: "100%",
+        padding: 0,
+        margin: 0
+      }}
+    >
       {!teamChosen ? (
         <Container
           component="main"
@@ -77,8 +86,7 @@ const Participant: React.FC = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            width: "85%",
-            p: 2,
+            width: "100%",
             height: "75vh",
             justifyContent: "center",
             gap: "10px"
@@ -116,7 +124,7 @@ const Participant: React.FC = () => {
           <NavbarDown setActiveComponent={setActiveComponent} isAdmin={false} />
         </>
       )}
-    </Container>
+    </Box>
   );
 };
 
