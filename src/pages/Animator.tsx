@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Autocomplete, Button, Container, Grid, TextField, Typography } from "@mui/material";
+import { Autocomplete, Button, Container, Grid, TextField, Typography, Box } from "@mui/material";
 import { useFetch, useLocalStorage, useActiveComponent, useActivityContext } from "@/hooks/";
 import { ANIMATOR_API, ACTIVITY_API } from "@/routes/api/";
 import { IStand } from "@/types/ActivityInterface";
@@ -159,7 +159,16 @@ const Animator: React.FC = () => {
   });
 
   return (
-    <Container sx={{ display: "flex", flexDirection: "column", height: "100vh", padding: "0" }}>
+    <Box
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      height: "100vh",
+      width: "100%",
+      padding: 0,
+      margin: 0
+    }}
+  >
       {/* If animator has not yet selected his stand(s) */}
       {!animatorStandSetted ? (
         <Container
@@ -237,7 +246,7 @@ const Animator: React.FC = () => {
           <NavbarDown setActiveComponent={setActiveComponent} isAdmin={false} />
         </>
       )}
-    </Container>
+    </Box>
   );
 };
 
