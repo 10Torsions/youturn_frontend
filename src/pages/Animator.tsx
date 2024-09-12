@@ -154,7 +154,7 @@ const Animator: React.FC = () => {
     defaultComponent: "Stand",
     components: {
       Stand: <Stand animatorInfo={selectedStands || []} />,
-      GeneralVieuw: <GeneralView />
+      GeneralView: <GeneralView />
     }
   });
 
